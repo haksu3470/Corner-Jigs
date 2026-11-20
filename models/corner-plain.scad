@@ -1,8 +1,8 @@
-// Kulaksız gövde — 70×22, et 5 mm, U kanal 18 mm.
+// Kulaksız gövde — 70×22, et 3 mm, U kanal 18 mm.
 
 clamp = 18;
 entry = 18.4;
-wall = 5;
+wall = 3;
 arm = 70;
 h = 22;
 top = 5;

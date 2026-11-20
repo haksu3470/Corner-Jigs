@@ -2,11 +2,11 @@
 
 **Canlı 3D görüntüleyici:** [https://corner-jigs.apps.grok.bot](https://corner-jigs.apps.grok.bot)
 
-İki 18 mm sunta/MDF’yi köşede tutan L aparat. Ortak gövde: **70×22 mm**, et **5 mm**, U kanal **18 mm**.
+İki 18 mm sunta/MDF’yi köşede tutan L aparat. Ortak gövde: **70×22 mm**, et **3 mm**, U kanal **18 mm**.
 
 ## 1) Kulaklı (`corner-assembly-square`)
 
-- Aynı gövde + dış yüzde iki yanak + kulak  
+- Aynı gövde + dış yüzde iki **kalın yanak** (8×7×16 mm) + kulak  
 - Ø2.5 mm vida: 1. yanak → kulak → 2. yanak  
 - Kılavuz delik: kenardan 9 mm, üstten 36 mm, Ø3 mm  
 

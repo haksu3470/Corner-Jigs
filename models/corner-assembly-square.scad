@@ -1,9 +1,9 @@
-// Gövde 70×22, et 5, kanal 18. Kulak iki yanak arasında. Vida Ø2.5.
+// Gövde 70×22, et 3, kanal 18. Kulak iki kalın yanak arasında. Vida Ø2.5.
 // Kılavuz: kenardan 9, üstten 36, Ø3.
 
 clamp = 18;
 entry = 18.4;
-wall = 5;
+wall = 3;
 arm = 70;
 h = 22;
 top = 5;
@@ -16,27 +16,29 @@ screw_r = 1.25;
 guide_r = 1.5;
 ear_w = 12;
 ear_t = 4;
-cheek_w = 4.5;
-cheek_t = 4;
+cheek_w = 8;   // kulağı tutan yanak kalınlığı
+cheek_t = 7;   // yanak derinliği
+cheek_h = 16;  // yanak yüksekliği
 clear = 0.35;
 ch = wall + clamp + wall;
 screw_z = 2.5;
 cheek_y0 = -cheek_t;
 cheek_dy = cheek_t + 1;
+cheek_z0 = screw_z - 5;
 ear_y = cheek_y0;
 screw_y = cheek_y0 + cheek_t / 2;
 left_x = hole_x - ear_w / 2 - clear - cheek_w;
 right_x = hole_x + ear_w / 2 + clear;
 ear_bot = hole_z - 5;
-ear_top = screw_z + 4;
+ear_top = screw_z + 5;
 
 module body() {
   difference() {
     union() {
       cube([arm, ch, h]);
       cube([ch, arm, h]);
-      translate([left_x, cheek_y0, screw_z - 4]) cube([cheek_w, cheek_dy, 10]);
-      translate([right_x, cheek_y0, screw_z - 4]) cube([cheek_w, cheek_dy, 10]);
+      translate([left_x, cheek_y0, cheek_z0]) cube([cheek_w, cheek_dy, cheek_h]);
+      translate([right_x, cheek_y0, cheek_z0]) cube([cheek_w, cheek_dy, cheek_h]);
     }
     translate([wall, wall, -0.1]) cube([arm - wall + 1, clamp, drop + 0.2]);
     translate([wall, wall, -0.1]) cube([clamp, arm - wall + 1, drop + 0.2]);

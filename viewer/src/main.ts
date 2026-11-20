@@ -25,21 +25,21 @@ const products: Product[] = [
     id: "square",
     title: "Köşe sabitleme aparatı",
     blurb:
-      "Gövde 70×22, et 5, kanal 18. Kulak iki yanak arasında; Ø2.5 vida 1→2.",
-    stl: "/models/corner-assembly-square.stl?v=14",
+      "Gövde 70×22, et 3, kanal 18. Kulak kalın yanaklar arasında; Ø2.5 vida 1→2.",
+    stl: "/models/corner-assembly-square.stl?v=15",
     scad: "../models/corner-assembly-square.scad",
     reference: "/reference/reel1-kose-gonye.jpg",
     boardHint:
-      "70×22 · et 5 · kanal 18 · delik Ø3 · 9×36 · vida Ø2.5",
+      "70×22 · et 3 · yanak 8×7×16 · delik Ø3 · 9×36 · vida Ø2.5",
   },
   {
     id: "plain",
     title: "Kulaksız köşe aparatı",
     blurb: "Birincinin aynı gövdesi — yanak ve kulak yok. Sadece köşeyi tutar.",
-    stl: "/models/corner-plain.stl?v=14",
+    stl: "/models/corner-plain.stl?v=15",
     scad: "../models/corner-plain.scad",
     reference: "/reference/reel2-kanal-jig.jpg",
-    boardHint: "70×22 mm · et 5 mm · kanal 18 mm · kulak yok",
+    boardHint: "70×22 mm · et 3 mm · kanal 18 mm · kulak yok",
   },
 ];
 
@@ -50,7 +50,7 @@ app.innerHTML = `
       <h1 class="brand">Köşe<span>.</span></h1>
       <p class="lede">
         İki 18&nbsp;mm sunta/MDF köşe aparatı: kulaklı ve kulaksız.
-        Gövde 70×22&nbsp;mm, et 5&nbsp;mm, U kanal 18&nbsp;mm.
+        Gövde 70×22&nbsp;mm, et 3&nbsp;mm, U kanal 18&nbsp;mm.
       </p>
     </header>
     <div class="stage">

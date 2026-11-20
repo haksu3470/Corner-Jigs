@@ -4,8 +4,9 @@
 1) Kulaklı: gövde + iki yanak + kulak (Ø2.5 vida 1→kulak→2)
 2) Kulaksız: aynı gövde, yanak/kulak yok
 
-Ortak: 70×22 mm, et 5 mm, U kanal 18 mm.
+Ortak: 70×22 mm, et 3 mm, U kanal 18 mm.
 Kulaklıda kılavuz: kenardan 9 mm, üstten 36 mm, Ø3.
+Yanaklar (kulağı tutan): daha kalın.
 """
 
 from __future__ import annotations
@@ -21,7 +22,7 @@ ROOT = Path(__file__).resolve().parent
 
 CLAMP = 18.0  # U kanal iç genişlik
 ENTRY = 18.4  # ağızda hafif giriş
-WALL = 5.0  # et kalınlığı (kanal duvarları)
+WALL = 3.0  # et kalınlığı
 ARM = 70.0
 MOUTH = 8.0
 H = 22.0
@@ -33,8 +34,9 @@ GUIDE_R = 1.5
 SCREW_R = 1.25
 EAR_W = 12.0
 EAR_T = 4.0
-CHEEK_W = 4.5
-CHEEK_T = 4.0
+CHEEK_W = 8.0  # kulağı tutan yanak kalınlığı (vida ekseni)
+CHEEK_T = 7.0  # yanak derinliği
+CHEEK_H = 16.0  # yanak yüksekliği
 CLEAR = 0.35
 
 
@@ -87,14 +89,13 @@ def build_with_ear():
     body = build_plain_body()
 
     screw_z = 2.5
-    cheek_h = 10.0
-    cheek_z0 = screw_z - 4.0
+    cheek_z0 = screw_z - 5.0
     cheek_y0 = -CHEEK_T
     cheek_dy = CHEEK_T + 1.0
     left_x = hole_x - EAR_W / 2 - CLEAR - CHEEK_W
     right_x = hole_x + EAR_W / 2 + CLEAR
-    body = U(body, box_at(CHEEK_W, cheek_dy, cheek_h, (left_x, cheek_y0, cheek_z0)))
-    body = U(body, box_at(CHEEK_W, cheek_dy, cheek_h, (right_x, cheek_y0, cheek_z0)))
+    body = U(body, box_at(CHEEK_W, cheek_dy, CHEEK_H, (left_x, cheek_y0, cheek_z0)))
+    body = U(body, box_at(CHEEK_W, cheek_dy, CHEEK_H, (right_x, cheek_y0, cheek_z0)))
 
     ear_y = cheek_y0
     screw_y = cheek_y0 + CHEEK_T / 2
@@ -104,7 +105,7 @@ def build_with_ear():
     body = D(body, screw)
 
     ear_bot = hole_z - 5.0
-    ear_top = screw_z + 4.0
+    ear_top = screw_z + 5.0
     flap = box_at(EAR_W, EAR_T, ear_top - ear_bot, (hole_x - EAR_W / 2, ear_y, ear_bot))
     guide = cyl_y(GUIDE_R, EAR_T + 4)
     guide.apply_translation([hole_x, screw_y, hole_z])
