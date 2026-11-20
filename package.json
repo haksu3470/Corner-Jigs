@@ -1,0 +1,10 @@
+{
+  "name": "kose-3d-jigs",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix viewer run dev -- --host 127.0.0.1 --port 4317",
+    "build": "npm --prefix viewer run build",
+    "preview": "npm --prefix viewer run preview -- --host 127.0.0.1 --port 4317",
+    "generate": "python3 models/generate_stl.py"
+  }
+}

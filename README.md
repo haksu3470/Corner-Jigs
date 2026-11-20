@@ -1,0 +1,26 @@
+# Köşe — 18 mm montaj aparatları
+
+İki 18 mm sunta/MDF’yi köşede tutan L aparat. Ortak gövde: **70×22 mm**, et **3 mm**, U kanal **18 mm**.
+
+## 1) Kulaklı (`corner-assembly-square`)
+
+- Aynı gövde + dış yüzde iki yanak + kulak  
+- Ø2.5 mm vida: 1. yanak → kulak → 2. yanak  
+- Kılavuz delik: kenardan 9 mm, üstten 36 mm, Ø3 mm  
+
+Dosyalar: `models/corner-assembly-square.{scad,stl}`, `corner-body.stl`, `corner-ear.stl`
+
+## 2) Kulaksız (`corner-plain`)
+
+Birincinin aynı gövdesi; yanak ve kulak yok.
+
+Dosyalar: `models/corner-plain.{scad,stl}`
+
+## Çalıştırma
+
+```bash
+pip install numpy trimesh manifold3d
+python3 models/generate_stl.py
+npm install --prefix viewer
+npm run dev --prefix viewer
+```
