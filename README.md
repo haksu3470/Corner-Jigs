@@ -1,5 +1,7 @@
 # Köşe — 18 mm montaj aparatları
 
+**Canlı 3D görüntüleyici:** [https://corner-jigs.apps.grok.bot](https://corner-jigs.apps.grok.bot)
+
 İki 18 mm sunta/MDF’yi köşede tutan L aparat. Ortak gövde: **70×22 mm**, et **3 mm**, U kanal **18 mm**.
 
 ## 1) Kulaklı (`corner-assembly-square`)
