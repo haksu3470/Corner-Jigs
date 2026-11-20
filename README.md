@@ -6,9 +6,11 @@
 
 ## 1) Kulaklı (`corner-assembly-square`)
 
-- Aynı gövde + dış yüzde iki **kalın yanak** (8×7×16 mm) + kulak  
+- Dış et aşağı doğru iki yanak + arada kulak (et kalınlığının devamı, basamak yok)  
+- Kulak sunta yüzüne yaslanır, gövdeden taşmaz  
 - Ø2.5 mm vida: 1. yanak → kulak → 2. yanak  
-- Kılavuz delik: kenardan 9 mm, üstten 36 mm, Ø3 mm  
+- Kılavuz: üstten 36 mm, Ø3 mm  
+- Yanaklar yalnızca X’te kalın (tutmak için); gövdeyi şişirmez  
 
 Dosyalar: `models/corner-assembly-square.{scad,stl}`, `corner-body.stl`, `corner-ear.stl`
 

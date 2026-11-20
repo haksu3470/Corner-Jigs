@@ -25,18 +25,18 @@ const products: Product[] = [
     id: "square",
     title: "Köşe sabitleme aparatı",
     blurb:
-      "Gövde 70×22, et 3, kanal 18. Kulak kalın yanaklar arasında; Ø2.5 vida 1→2.",
-    stl: "/models/corner-assembly-square.stl?v=15",
+      "Gövde 70×22, et 3, kanal 18. Kulak et devamı (basamaksız); yanaklar X’te kalın.",
+    stl: "/models/corner-assembly-square.stl?v=17",
     scad: "../models/corner-assembly-square.scad",
     reference: "/reference/reel1-kose-gonye.jpg",
     boardHint:
-      "70×22 · et 3 · yanak 8×7×16 · delik Ø3 · 9×36 · vida Ø2.5",
+      "70×22 · et 3 · kulak et devamı · delik Ø3 · 36 mm · vida Ø2.5",
   },
   {
     id: "plain",
     title: "Kulaksız köşe aparatı",
     blurb: "Birincinin aynı gövdesi — yanak ve kulak yok. Sadece köşeyi tutar.",
-    stl: "/models/corner-plain.stl?v=15",
+    stl: "/models/corner-plain.stl?v=17",
     scad: "../models/corner-plain.scad",
     reference: "/reference/reel2-kanal-jig.jpg",
     boardHint: "70×22 mm · et 3 mm · kanal 18 mm · kulak yok",

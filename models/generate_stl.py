@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 """18 mm köşe sabitleme aparatı — iki varyant.
 
-1) Kulaklı: gövde + iki yanak + kulak (Ø2.5 vida 1→kulak→2)
-2) Kulaksız: aynı gövde, yanak/kulak yok
-
-Ortak: 70×22 mm, et 3 mm, U kanal 18 mm.
-Kulaklıda kılavuz: kenardan 9 mm, üstten 36 mm, Ø3.
-Yanaklar (kulağı tutan): daha kalın.
+Kulaklı: dış et (y=0..WALL) aşağı doğru iki yanak + arada kulak.
+- Kulak et kalınlığının devamı; suntaya (y=WALL) yaslanır; gövdeden taşmaz.
+- Gövde ile kulak arasında basamak/yükseklik farkı yok (z=0'da birleşir).
+- Yanaklar sadece X'te kalın (kulağı tutmak için); kanala veya dışarı şişmez.
 """
 
 from __future__ import annotations
@@ -20,24 +18,24 @@ from trimesh.transformations import rotation_matrix
 
 ROOT = Path(__file__).resolve().parent
 
-CLAMP = 18.0  # U kanal iç genişlik
-ENTRY = 18.4  # ağızda hafif giriş
-WALL = 3.0  # et kalınlığı
+CLAMP = 18.0
+ENTRY = 18.4
+WALL = 3.0
 ARM = 70.0
 MOUTH = 8.0
 H = 22.0
 TOP = 5.0
 DROP = H - TOP
-HOLE_X = 9.0
+
+# Kulak konumu: dış et üzerinde, yanaklar x>0 içinde kalsın
+EAR_W = 12.0
+CHEEK_W = 7.0  # tutan yanakların X kalınlığı
+CLEAR = 0.25
+HOLE_X = CHEEK_W + CLEAR + EAR_W / 2 + 3.0  # ≈ 16.25
 HOLE_FROM_TOP = 36.0
 GUIDE_R = 1.5
 SCREW_R = 1.25
-EAR_W = 12.0
-EAR_T = 4.0
-CHEEK_W = 8.0  # kulağı tutan yanak kalınlığı (vida ekseni)
-CHEEK_T = 7.0  # yanak derinliği
-CHEEK_H = 16.0  # yanak yüksekliği
-CLEAR = 0.35
+EAR_T = WALL  # et devamı
 
 
 def box_at(sx, sy, sz, origin) -> trimesh.Trimesh:
@@ -68,7 +66,6 @@ def cyl_y(r, length, n=32) -> trimesh.Trimesh:
 
 
 def build_plain_body() -> trimesh.Trimesh:
-    """Kulaksız gövde — yanak yok, vida deliği yok."""
     ch = WALL + CLAMP + WALL
     body = box_at(ARM, ch, H, (0, 0, 0))
     body = U(body, box_at(ch, ARM, H, (0, 0, 0)))
@@ -85,27 +82,45 @@ def build_plain_body() -> trimesh.Trimesh:
 
 def build_with_ear():
     hole_x = HOLE_X
-    hole_z = H - HOLE_FROM_TOP
+    hole_z = H - HOLE_FROM_TOP  # 22-36 = -14
     body = build_plain_body()
 
-    screw_z = 2.5
-    cheek_z0 = screw_z - 5.0
-    cheek_y0 = -CHEEK_T
-    cheek_dy = CHEEK_T + 1.0
+    # Dış et zarfı: y=[0, WALL] — taşma yok, sunta yüzeyi y=WALL
+    ear_y = 0.0
+    cheek_y0 = 0.0
+    cheek_dy = WALL
+
     left_x = hole_x - EAR_W / 2 - CLEAR - CHEEK_W
     right_x = hole_x + EAR_W / 2 + CLEAR
-    body = U(body, box_at(CHEEK_W, cheek_dy, CHEEK_H, (left_x, cheek_y0, cheek_z0)))
-    body = U(body, box_at(CHEEK_W, cheek_dy, CHEEK_H, (right_x, cheek_y0, cheek_z0)))
 
-    ear_y = cheek_y0
-    screw_y = cheek_y0 + CHEEK_T / 2
+    # Yanaklar: gövde alt yüzünden (z=0) aşağı — etin düz devamı, basamak yok
+    cheek_z0 = hole_z - 5.0
+    cheek_top = 0.0  # z=0'da gövdeye flush birleşir
+    cheek_h = cheek_top - cheek_z0
+
+    # Gövde dış etinde kulak yuvası (yanaklar arası), z=0'dan biraz içeri
+    slot_x0 = hole_x - EAR_W / 2 - CLEAR
+    slot_w = EAR_W + 2 * CLEAR
+    body = D(
+        body,
+        box_at(slot_w, WALL + 0.05, 3.0, (slot_x0, -0.02, -0.05)),
+    )
+
+    # İki yanak — et devamı (Y=WALL), X'te kalın
+    body = U(body, box_at(CHEEK_W, cheek_dy, cheek_h, (left_x, cheek_y0, cheek_z0)))
+    body = U(body, box_at(CHEEK_W, cheek_dy, cheek_h, (right_x, cheek_y0, cheek_z0)))
+
+    # Menteşe: yanakların üstünde, gövdeye yakın
+    screw_z = -3.0
+    screw_y = WALL / 2
     span = (right_x + CHEEK_W) - left_x + 2
     screw = cyl_x(SCREW_R, span)
     screw.apply_translation([(left_x + right_x + CHEEK_W) / 2, screw_y, screw_z])
     body = D(body, screw)
 
+    # Kulak: et kalınlığı, z=0'a kadar (basamaksız birleşim)
     ear_bot = hole_z - 5.0
-    ear_top = screw_z + 5.0
+    ear_top = 0.0
     flap = box_at(EAR_W, EAR_T, ear_top - ear_bot, (hole_x - EAR_W / 2, ear_y, ear_bot))
     guide = cyl_y(GUIDE_R, EAR_T + 4)
     guide.apply_translation([hole_x, screw_y, hole_z])
@@ -139,16 +154,22 @@ def main() -> None:
     check(plain)
     check(body_eared)
 
+    b = assembly.bounds
+    print(f"bounds X {b[0,0]:.2f}→{b[1,0]:.2f}  Y {b[0,1]:.2f}→{b[1,1]:.2f}  Z {b[0,2]:.2f}→{b[1,2]:.2f}")
+    if b[0, 1] < -0.05:
+        raise SystemExit(f"Y taşması: {b[0,1]}")
+    if b[0, 0] < -0.05:
+        raise SystemExit(f"X taşması: {b[0,0]}")
+
     assembly.export(ROOT / "corner-assembly-square.stl")
     body_eared.export(ROOT / "corner-body.stl")
     flap.export(ROOT / "corner-ear.stl")
     plain.export(ROOT / "corner-plain.stl")
-    plain.export(ROOT / "edge-slot-corner-jig.stl")  # viewer 2. ürün
+    plain.export(ROOT / "edge-slot-corner-jig.stl")
 
     print(
-        f"kulaklı faces={len(assembly.faces)}  "
-        f"kulaksız extents={np.round(plain.extents, 1)}  "
-        f"H={H} wall={WALL} arm={ARM}"
+        f"ok wall={WALL} ear_t={EAR_T} cheek_w={CHEEK_W} "
+        f"hole_x={HOLE_X:.1f} faces={len(assembly.faces)}"
     )
 
 
