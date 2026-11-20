@@ -1,9 +1,9 @@
-// Gövde 70×22, et 3, kanal 18. Kulak iki yanak arasında. Vida Ø2.5.
+// Gövde 70×22, et 5, kanal 18. Kulak iki yanak arasında. Vida Ø2.5.
 // Kılavuz: kenardan 9, üstten 36, Ø3.
 
 clamp = 18;
 entry = 18.4;
-wall = 3;
+wall = 5;
 arm = 70;
 h = 22;
 top = 5;

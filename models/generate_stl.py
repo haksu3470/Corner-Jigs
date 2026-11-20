@@ -4,7 +4,7 @@
 1) Kulaklı: gövde + iki yanak + kulak (Ø2.5 vida 1→kulak→2)
 2) Kulaksız: aynı gövde, yanak/kulak yok
 
-Ortak: 70×22 mm, et 3 mm, U kanal 18 mm.
+Ortak: 70×22 mm, et 5 mm, U kanal 18 mm.
 Kulaklıda kılavuz: kenardan 9 mm, üstten 36 mm, Ø3.
 """
 
@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parent
 
 CLAMP = 18.0  # U kanal iç genişlik
 ENTRY = 18.4  # ağızda hafif giriş
-WALL = 3.0  # et kalınlığı
+WALL = 5.0  # et kalınlığı (kanal duvarları)
 ARM = 70.0
 MOUTH = 8.0
 H = 22.0
@@ -145,9 +145,9 @@ def main() -> None:
     plain.export(ROOT / "edge-slot-corner-jig.stl")  # viewer 2. ürün
 
     print(
-        f"kulaklı bodies={assembly.body_count}  "
+        f"kulaklı faces={len(assembly.faces)}  "
         f"kulaksız extents={np.round(plain.extents, 1)}  "
-        f"H={H} arm={ARM}"
+        f"H={H} wall={WALL} arm={ARM}"
     )
 
 

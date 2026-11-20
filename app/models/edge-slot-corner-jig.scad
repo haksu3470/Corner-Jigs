@@ -1,9 +1,9 @@
 // İkinci ürün = kulaksız gövde (corner-plain ile aynı).
-// 70×22, et 3 mm, U kanal 18 mm.
+// 70×22, et 5 mm, U kanal 18 mm.
 
 clamp = 18;
 entry = 18.4;
-wall = 3;
+wall = 5;
 arm = 70;
 h = 22;
 top = 5;
